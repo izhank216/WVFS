@@ -1,0 +1,32 @@
+name: Build WVFS
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    name: Build WVFS with Emscripten
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Emscripten
+        uses: emscripten-core/setup-emsdk@v3
+        with:
+          version: latest
+
+      - name: Build WVFS
+        run: |
+          mkdir -p build
+          make all
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: wvfs-build
+          path: build/
