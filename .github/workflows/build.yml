@@ -26,16 +26,14 @@ jobs:
           cd emsdk
           ./emsdk install latest
           ./emsdk activate latest
-          echo "source $(pwd)/emsdk_env.sh" >> $GITHUB_ENV
 
-      - name: Load Emscripten Environment
+      - name: Add Emscripten to PATH
         run: |
-          source emsdk/emsdk_env.sh
-          emcc --version
+          echo "/home/runner/work/WVFS/WVFS/emsdk" >> $GITHUB_PATH
+          echo "/home/runner/work/WVFS/WVFS/emsdk/upstream/emscripten" >> $GITHUB_PATH
 
       - name: Build WVFS
         run: |
-          source emsdk/emsdk_env.sh
           mkdir -p build
           make all
 
