@@ -8,12 +8,13 @@ C_SRCS := $(SRC_DIR)/filesystem.c $(SRC_DIR)/dev/null.c
 
 OUTPUT_JS := $(BUILD_DIR)/wvfs.js
 
-EMFLAGS := -O3 -s MODULARIZE=1 -s EXPORT_NAME="WVFS" \
-  -s EXPORTED_FUNCTIONS='["_wvfs_init","_wvfs_mkdir","_wvfs_touch","_wvfs_ls","_wvfs_cd","_wvfs_pwd","_wvfs_write_file","_wvfs_read_file"]' \
-  -sEXPORTED_RUNTIME_METHODS='["cwrap","ccall"]' \
-  -Isrc \
-  -sALLOW_MEMORY_GROWTH=1 \
-  -sSTRICT=1
+EMFLAGS := -O3 \
+	-s MODULARIZE=1 \
+	-s EXPORT_NAME="WVFS" \
+	-s EXPORTED_FUNCTIONS='["_wvfs_init","_wvfs_mkdir","_wvfs_touch","_wvfs_ls","_wvfs_cd","_wvfs_pwd","_wvfs_write_file","_wvfs_read_file"]' \
+	-s EXPORTED_RUNTIME_METHODS='["cwrap","ccall"]' \
+	-s ALLOW_MEMORY_GROWTH=1 \
+	-I$(SRC_DIR)
 
 .PHONY: all clean
 
