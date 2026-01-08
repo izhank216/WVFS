@@ -27,8 +27,7 @@
 #include <string.h>
 #include "wvfs.h"
 
-// Include dev/null functions
-#include "dev/null.c"
+
 
 #define MAX_NAME 256
 #define MAX_CHILDREN 128
