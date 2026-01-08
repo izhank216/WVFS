@@ -15,13 +15,27 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install Emscripten
-        uses: emscripten-core/setup-emsdk@v3
-        with:
-          version: latest
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y git cmake python3 nodejs npm
+
+      - name: Clone Emscripten SDK
+        run: |
+          git clone https://github.com/emscripten-core/emsdk.git emsdk
+          cd emsdk
+          ./emsdk install latest
+          ./emsdk activate latest
+          echo "source $(pwd)/emsdk_env.sh" >> $GITHUB_ENV
+
+      - name: Load Emscripten Environment
+        run: |
+          source emsdk/emsdk_env.sh
+          emcc --version
 
       - name: Build WVFS
         run: |
+          source emsdk/emsdk_env.sh
           mkdir -p build
           make all
 
